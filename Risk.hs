@@ -95,9 +95,9 @@ fightR rank (stratA, stratD) (unitsA, unitsD) = do
 
 hitR :: Rank -> Units -> D Int
 hitR rank units = case rank of
-    RSiege   -> binomial12 !! (2 * uSiege units)
+    RSiege   -> binomial23 !! (2 * uSiege units)
     RVolley  -> binomial13 !! uArchers units
-    RCavalry -> binomial12 !! uCavalry units
+    RCavalry -> binomial23 !! uCavalry units
 
 fightG :: (Strat, Strat) -> (Units, Units) -> D (Units, Units)
 fightG (stratA, stratD) (unitsA, unitsD) = do
@@ -120,9 +120,9 @@ hitG
                $ map (\case GT -> (1,0); EQ -> (0,1); LT -> (0,1))
                $ zipWith compare rsA rsD
 
-binomial12, binomial13 :: [D Int]
-binomial12 = map (flip binomial (1/2)) [0..]
+binomial13, binomial23 :: [D Int]
 binomial13 = map (flip binomial (1/3)) [0..]
+binomial23 = map (flip binomial (2/3)) [0..]
 
 sacrifice :: Strat -> Units -> Units
 sacrifice strat units = case units of
